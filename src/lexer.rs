@@ -34,4 +34,21 @@ impl<'a> Lexer<'a> {
     fn offset(&mut self) -> usize {
         self.source.len() - self.chars.as_str().len()
     }
+
+    fn peek(&self) -> Option<char> {
+        self.chars.clone().next()
+    }
+
+    fn match_keyword(&self, ident: &str) -> Kind {
+        // all keywords are 1 <= length <= 10
+        if ident.len() == 1 || ident.len() > 10 {
+            return Kind::Identifier;
+        }
+        match ident {
+            "if" => Kind::If,
+            "while" => Kind::While,
+            "for" => Kind::For,
+            _ => Kind::Identifier
+        }
+    }
 }
